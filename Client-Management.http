@@ -1,6 +1,28 @@
-@Client_Management_HostAddress = http://localhost:5037
 
-GET {{Client_Management_HostAddress}}/weatherforecast/
-Accept: application/json
+
+GET http://localhost:5037/api/clients
+
 
 ###
+POST http://localhost:5037/api/clients
+Content-Type: application/json
+
+{
+    "name":"Rifat",
+    "email":"rifatbhuiyan01944@gmail.com",
+    "phone":"01944163529",
+    "address":"Narayanganj, Araihazar"
+}
+###
+PUT http://localhost:5037/api/clients/d8d0875c-f84e-430d-ae99-f3017c1b5f69
+Content-Type: application/json
+
+{
+    "name":"Ratul",
+    "email":"ratulbhuiyan01944@gmail.com",
+    "phone":"01944163509",
+    "address":"Dhaka, Mirpur"
+}
+
+###
+DELETE  http://localhost:5037/api/clients/9b16cd4c-8a0f-45f0-b42b-2de8c842f845
