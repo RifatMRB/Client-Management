@@ -11,8 +11,4 @@ public class Client
     public string? Address {get;set;}
     public DateTime CreatedAt  { get; set;}
 
-    internal static void Remove(Client client)
-    {
-        throw new NotImplementedException();
-    }
 }

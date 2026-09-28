@@ -14,7 +14,7 @@ Content-Type: application/json
     "address":"Narayanganj, Araihazar"
 }
 ###
-PUT http://localhost:5037/api/clients/81c4a25a-94bb-42d8-85c5-8b96bfbbf8f5
+PUT http://localhost:5037/api/clients/1517c0c6-cbe6-4cc0-995f-b5f52a555237
 Content-Type: application/json
 
 {
@@ -25,4 +25,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE  http://localhost:5037/api/clients/81c4a25a-94bb-42d8-85c5-8b96bfbbf8f5
+DELETE  http://localhost:5037/api/clients/1517c0c6-cbe6-4cc0-995f-b5f52a555237

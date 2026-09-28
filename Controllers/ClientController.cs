@@ -1,3 +1,4 @@
+using Client_Management.DTOs;
 using Client_Management.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,18 @@ public class ClientController : ControllerBase
     [HttpGet]
     public IActionResult GetAllClient()
     {
-        return Ok(clients);
+        var ReadClients = clients.Select(c=>
+            new ClientReadDto
+            {
+                ClientId = c.ClientId,
+                Name = c.Name,
+                Email = c.Email,
+                Phone = c.Phone,
+                Address = c.Address,
+                CreatedAt = c.CreatedAt
+            }
+        );
+        return Ok(ReadClients);
     }
 
     [HttpGet("{Id:guid}")]
@@ -20,11 +32,20 @@ public class ClientController : ControllerBase
     {
         var client = clients.FirstOrDefault(c => c.ClientId == Id);
         if (client == null) return NotFound();
-        return Ok(client);
+        var ReadClient = new ClientReadDto
+        {
+            ClientId = client.ClientId,
+            Name = client.Name,
+            Email = client.Email,
+            Phone = client.Phone,
+            Address = client.Address,
+            CreatedAt = client.CreatedAt
+        };
+        return Ok(ReadClient);
     }
 
     [HttpPost]
-    public IActionResult CreateClient(Client clientData)
+    public IActionResult CreateClient(ClientCreateDto clientData)
     {
         var client = new Client
         {
@@ -36,11 +57,21 @@ public class ClientController : ControllerBase
             CreatedAt = DateTime.UtcNow
         };
         clients.Add(client);
-        return Created($"/api/clients/{client.ClientId}", client);
+
+        var ReadClient = new ClientReadDto
+        {
+            ClientId = client.ClientId,
+            Name = client.Name,
+            Email = client.Email,
+            Phone = client.Phone,
+            Address = client.Address,
+            CreatedAt = client.CreatedAt
+        };
+        return Created($"/api/clients/{ReadClient.ClientId}", ReadClient);
     }
 
     [HttpPut("{Id:guid}")]
-    public IActionResult UpdateClientById(Guid Id, Client clientData)
+    public IActionResult UpdateClientById(Guid Id, ClientUpdateDto clientData)
     {
         var client = clients.FirstOrDefault(c => c.ClientId == Id);
         if (client == null) return NotFound();
@@ -48,7 +79,17 @@ public class ClientController : ControllerBase
         client.Email = clientData.Email ?? client.Email;
         client.Phone = clientData.Phone ?? client.Phone;
         client.Address = clientData.Address ?? client.Address;
-        return Ok(client);
+
+        var ReadClient = new ClientReadDto
+        {
+            ClientId = client.ClientId,
+            Name = client.Name,
+            Email = client.Email,
+            Phone = client.Phone,
+            Address = client.Address,
+            CreatedAt = client.CreatedAt
+        };
+        return Ok(ReadClient);
     }
 
     [HttpDelete("{Id:guid}")]
