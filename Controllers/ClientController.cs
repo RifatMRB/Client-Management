@@ -23,8 +23,9 @@ public class ClientController : ControllerBase
                 Address = c.Address,
                 CreatedAt = c.CreatedAt
             }
-        );
-        return Ok(ReadClients);
+        ).ToList();
+        return Ok(ApiResponse<List<ClientReadDto>>.SuccessResponse(ReadClients,
+        200,"found client successfully"));
     }
 
     [HttpGet("{Id:guid}")]
@@ -41,7 +42,7 @@ public class ClientController : ControllerBase
             Address = client.Address,
             CreatedAt = client.CreatedAt
         };
-        return Ok(ReadClient);
+        return Ok(ApiResponse<ClientReadDto>.SuccessResponse(ReadClient,200,"found client successfully"));
     }
 
     [HttpPost]
@@ -67,14 +68,17 @@ public class ClientController : ControllerBase
             Address = client.Address,
             CreatedAt = client.CreatedAt
         };
-        return Created($"/api/clients/{ReadClient.ClientId}", ReadClient);
+        return Created($"/api/clients/{ReadClient.ClientId}", ApiResponse<ClientReadDto>.
+        SuccessResponse(ReadClient,201,"Client created successfully"));
     }
 
     [HttpPut("{Id:guid}")]
     public IActionResult UpdateClientById(Guid Id, ClientUpdateDto clientData)
     {
         var client = clients.FirstOrDefault(c => c.ClientId == Id);
-        if (client == null) return NotFound();
+        if (client == null) return NotFound(ApiResponse<object>.ErrorResponse(new List<string>
+        {"Client not Found"},404
+        ,"Validation failed"));
         client.Name = clientData.Name ?? client.Name;
         client.Email = clientData.Email ?? client.Email;
         client.Phone = clientData.Phone ?? client.Phone;
@@ -89,15 +93,17 @@ public class ClientController : ControllerBase
             Address = client.Address,
             CreatedAt = client.CreatedAt
         };
-        return Ok(ReadClient);
+        return Ok(ApiResponse<ClientReadDto>.SuccessResponse(ReadClient,200,"Update client successfully"));
     }
 
     [HttpDelete("{Id:guid}")]
     public IActionResult DeleteClientById(Guid Id)
     {
         var client = clients.FirstOrDefault(c => c.ClientId == Id);
-        if (client == null) return NotFound();
+        if (client == null) return NotFound(ApiResponse<object>.ErrorResponse(new List<string>
+        {"Client not Found"},404
+        ,"Validation failed"));
         clients.Remove(client);
-        return NoContent();
+        return Ok(ApiResponse<object>.SuccessResponse(null,204,"Deleted successfully"));
     }
 }
