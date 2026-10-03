@@ -2,9 +2,13 @@ using System.ComponentModel.DataAnnotations;
 using Client_Management.Controllers;
 using Client_Management.Models;
 using Microsoft.AspNetCore.Mvc;
+using Client_Management.Services;
+using Client_Management.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<IClientService,ClientService>();
 // builder.Services.AddControllers().
 // ConfigureApiBehaviorOptions(option =>
 // {
