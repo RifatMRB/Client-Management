@@ -8,13 +8,13 @@ POST http://localhost:5037/api/clients
 Content-Type: application/json
 
 {
-    "name":"Rifat",
+    "name":"Ratul1",
     "email":"rifatbhuiyan01944@gmail.com",
     "phone":"01944163529",
     "address":"Narayanganj, Araihazar"
 }
 ###
-PUT http://localhost:5037/api/clients/1517c0c6-cbe6-4cc0-995f-b5f52a555237
+PUT http://localhost:5037/api/clients/01a10828-a085-7eeb-81f9-f05207509880
 Content-Type: application/json
 
 {

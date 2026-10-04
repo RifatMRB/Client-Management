@@ -4,11 +4,16 @@ using Client_Management.Models;
 using Microsoft.AspNetCore.Mvc;
 using Client_Management.Services;
 using Client_Management.Interfaces;
+using Client_Management.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IClientService,ClientService>();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(builder.
+Configuration.GetConnectionString("DefaultConnection")));
 // builder.Services.AddControllers().
 // ConfigureApiBehaviorOptions(option =>
 // {

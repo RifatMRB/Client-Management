@@ -19,36 +19,36 @@ public class ClientController : ControllerBase
     
 
     [HttpGet]
-    public IActionResult GetAllClient()
+    public async Task<IActionResult> GetAllClient()
     {
-        var ReadClients = _clientService.GetAllClient();
+        var ReadClients = await _clientService.GetAllClient();
         return Ok(ApiResponse<List<ClientReadDto>>.SuccessResponse(ReadClients,
         200,"found client successfully"));
     }
 
     [HttpGet("{Id:guid}")]
-    public IActionResult GetClientById(Guid Id)
+    public async Task<IActionResult> GetClientById(Guid Id)
     {
-        var client = _clientService.GetClientById(Id);
+        var client = await _clientService.GetClientById(Id);
         if (client == null) return NotFound();
         var ReadClient = client;
         return Ok(ApiResponse<ClientReadDto>.SuccessResponse(ReadClient,200,"found client successfully"));
     }
 
     [HttpPost]
-    public IActionResult CreateClient(ClientCreateDto clientData)
+    public async Task<IActionResult> CreateClient(ClientCreateDto clientData)
     {
         
 
-        var ReadClient = _clientService.CreateClient(clientData);
+        var ReadClient = await _clientService.CreateClient(clientData);
         return Created($"/api/clients/{ReadClient.ClientId}", ApiResponse<ClientReadDto>.
         SuccessResponse(ReadClient,201,"Client created successfully"));
     }
 
     [HttpPut("{Id:guid}")]
-    public IActionResult UpdateClientById(Guid Id, ClientUpdateDto clientData)
+    public async Task<IActionResult> UpdateClientById(Guid Id, ClientUpdateDto clientData)
     {
-        var client = _clientService.UpdateClientById(Id,clientData);
+        var client = await _clientService.UpdateClientById(Id,clientData);
         if (client == null) return NotFound(ApiResponse<object>.ErrorResponse(new List<string>
         {"Client not Found"},404
         ,"Validation failed"));
@@ -58,9 +58,9 @@ public class ClientController : ControllerBase
     }
 
     [HttpDelete("{Id:guid}")]
-    public IActionResult DeleteClientById(Guid Id)
+    public async Task<IActionResult> DeleteClientById(Guid Id)
     {
-        var client = _clientService.DeleteClientById(Id);
+        var client = await _clientService.DeleteClientById(Id);
         if (!client ) return NotFound(ApiResponse<object>.ErrorResponse(new List<string>
         {"Client not Found"},404
         ,"Validation failed"));
