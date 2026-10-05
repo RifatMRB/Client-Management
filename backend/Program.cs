@@ -8,7 +8,7 @@ using Client_Management.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
 builder.Services.AddScoped<IClientService,ClientService>();
 
